@@ -7,6 +7,7 @@ pub struct FormattedCharacter {
 }
 
 impl FormattedCharacter {
+    #[allow(dead_code)]
     pub fn from_str(s: &str) -> FormattedCharacter {
         FormattedCharacter {
             style: "".to_string(),
