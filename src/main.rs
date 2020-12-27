@@ -6,10 +6,11 @@ mod printer;
 
 use crate::tree::ChristmasTree;
 use crate::formatter::terminal::TerminalStyleTokenFormatter;
-use crate::printer::{TerminalPrinter, LinePrinter, DummyLinePrinter};
+use crate::printer::{TerminalPrinter, LinePrinter, DummyLinePrinter, HtmlPrinter};
 use crate::formatter::{format_grid, StyledTokenFormatter};
 use crate::cli::{Format, Command};
 use crate::formatter::dummy::DummyStyledTokenFormatter;
+use crate::formatter::html::HtmlStyledTokenFormatter;
 
 fn entry_point() -> Result<(), String> {
     let args = cli::arguments();
@@ -21,6 +22,9 @@ fn entry_point() -> Result<(), String> {
                 }
                 Format::Term => {
                     (&TerminalPrinter {}, &TerminalStyleTokenFormatter {})
+                }
+                Format::Html => {
+                    (&HtmlPrinter {}, &HtmlStyledTokenFormatter {})
                 }
             };
             let tree = ChristmasTree::new(25);

@@ -30,3 +30,17 @@ impl LinePrinter for TerminalPrinter {
         }
     }
 }
+
+pub struct HtmlPrinter {}
+
+impl LinePrinter for HtmlPrinter {
+    fn print(&self, lines: &Vec<String>) {
+        println!("<table><tr><td>");
+        println!("<pre style='background-color:black; padding: 20px'>");
+        for line in lines {
+            println!("{}<br/>", line)
+        }
+        println!("</pre>");
+        println!("</td></tr></table>");
+    }
+}

@@ -1,5 +1,6 @@
 pub mod terminal;
 pub mod dummy;
+pub mod html;
 
 use crate::line::StyledToken;
 

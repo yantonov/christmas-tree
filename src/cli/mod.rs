@@ -16,13 +16,14 @@ pub enum Command {
 
 #[derive(Clap)]
 pub struct Show {
-    #[clap(about = "raw | term | default", short, long, )]
+    #[clap(about = "raw | term | html | default", short, long, )]
     format: Option<String>
 }
 
 pub enum Format {
     Raw,
     Term,
+    Html,
 }
 
 impl FromStr for Format {
@@ -32,6 +33,7 @@ impl FromStr for Format {
         match value {
             "raw" => Ok(Format::Raw),
             "term" => Ok(Format::Term),
+            "html" => Ok(Format::Html),
             "default" => Ok(Format::Term),
             _ => Err(format!("invalid format: {}", value))
         }
