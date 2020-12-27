@@ -32,22 +32,22 @@ impl Style {
 }
 
 #[derive(Clone)]
-pub struct FormattedCharacter {
+pub struct StyledToken {
     s: String,
     style: Style,
 }
 
-impl FormattedCharacter {
+impl StyledToken {
     #[allow(dead_code)]
-    pub fn from_str(s: &str) -> FormattedCharacter {
-        FormattedCharacter {
+    pub fn from_str(s: &str) -> StyledToken {
+        StyledToken {
             s: s.to_string(),
             style: Style::default(),
         }
     }
 
-    pub fn styled_str(s: &str, style: Style) -> FormattedCharacter {
-        FormattedCharacter {
+    pub fn styled(s: &str, style: Style) -> StyledToken {
+        StyledToken {
             s: s.to_string(),
             style,
         }
@@ -62,7 +62,7 @@ impl FormattedCharacter {
     }
 }
 
-impl ToString for FormattedCharacter {
+impl ToString for StyledToken {
     fn to_string(&self) -> String {
         self.s.clone()
     }
@@ -74,13 +74,13 @@ pub struct Line {
 
 impl Line {
     pub fn pad(&self,
-               s: &Vec<FormattedCharacter>) -> Vec<FormattedCharacter> {
+               s: &Vec<StyledToken>) -> Vec<StyledToken> {
         self.pad_with(s, " ")
     }
 
     pub fn pad_with(&self,
-                    s: &Vec<FormattedCharacter>,
-                    pad_with: &str) -> Vec<FormattedCharacter> {
+                    s: &Vec<StyledToken>,
+                    pad_with: &str) -> Vec<StyledToken> {
         let w = self.width as usize;
         let s_len: usize = s.iter().map(|x| x.len()).sum();
 
@@ -88,22 +88,22 @@ impl Line {
             panic!("too long")
         }
 
-        let mut result: Vec<FormattedCharacter> = vec![];
+        let mut result: Vec<StyledToken> = vec![];
         let pad_left_size = (w - s_len) / 2;
         for _ in 0..pad_left_size {
-            result.push(FormattedCharacter::from_str(pad_with));
+            result.push(StyledToken::from_str(pad_with));
         }
         for ch in s.iter() {
             result.push((*ch).clone());
         }
         for _ in 0..(w - s_len - pad_left_size) {
-            result.push(FormattedCharacter::from_str(pad_with));
+            result.push(StyledToken::from_str(pad_with));
         }
         result
     }
 
-    pub fn fill(&self, ch: &FormattedCharacter) -> Vec<FormattedCharacter> {
-        let mut line: Vec<FormattedCharacter> = vec![];
+    pub fn fill(&self, ch: &StyledToken) -> Vec<StyledToken> {
+        let mut line: Vec<StyledToken> = vec![];
         for _ in 0..self.width {
             line.push((*ch).clone());
         }
@@ -123,7 +123,7 @@ mod tests {
     fn pad() {
         let width: usize = 9;
         let line = Line::new(width as u16);
-        let chars: Vec<FormattedCharacter> = line.pad(&vec![FormattedCharacter::from_str("*")]);
+        let chars: Vec<StyledToken> = line.pad(&vec![StyledToken::from_str("*")]);
         assert_eq!(width, chars.len());
         let center = width / 2;
         assert_eq!("*", chars.get(center).unwrap().s);
@@ -138,7 +138,7 @@ mod tests {
     fn pad_token() {
         let width: usize = 9;
         let line = Line::new(width as u16);
-        let chars = line.pad(&vec![FormattedCharacter::from_str("III")]);
+        let chars = line.pad(&vec![StyledToken::from_str("III")]);
 
         let actual_width: usize = 7;
         assert_eq!(7, chars.len());
@@ -156,7 +156,7 @@ mod tests {
     fn fill() {
         let width: usize = 9;
         let line = Line::new(width as u16);
-        let chars = line.fill(&FormattedCharacter::from_str("#"));
+        let chars = line.fill(&StyledToken::from_str("#"));
         assert_eq!(width, chars.len());
         for i in 0..chars.len() {
             assert_eq!("#", chars.get(i).unwrap().s);

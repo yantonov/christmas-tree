@@ -1,7 +1,7 @@
-use crate::line::{FormattedCharacter, Color};
-use crate::formatter::Formatter;
+use crate::line::{StyledToken, Color};
+use crate::formatter::StyledTokenFormatter;
 
-pub struct TerminalFormatter {}
+pub struct TerminalStyleTokenFormatter {}
 
 fn get_color_string(color: &Color) -> String {
     match color {
@@ -14,8 +14,8 @@ fn get_color_string(color: &Color) -> String {
     }
 }
 
-impl Formatter for TerminalFormatter {
-    fn format(&self, instance: &FormattedCharacter) -> String {
+impl StyledTokenFormatter for TerminalStyleTokenFormatter {
+    fn format(&self, instance: &StyledToken) -> String {
         let style = instance.style();
         let color = style.get_color();
         match color {

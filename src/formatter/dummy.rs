@@ -1,10 +1,10 @@
-use crate::formatter::Formatter;
-use crate::line::FormattedCharacter;
+use crate::formatter::StyledTokenFormatter;
+use crate::line::StyledToken;
 
-pub struct DummyFormatter {}
+pub struct DummyStyledTokenFormatter {}
 
-impl Formatter for DummyFormatter {
-    fn format(&self, instance: &FormattedCharacter) -> String {
+impl StyledTokenFormatter for DummyStyledTokenFormatter {
+    fn format(&self, instance: &StyledToken) -> String {
         format!("{}", instance.to_string())
     }
 }
