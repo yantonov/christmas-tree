@@ -27,7 +27,7 @@ fn entry_point() -> Result<(), String> {
                     (&HtmlPrinter {}, &HtmlStyledTokenFormatter {})
                 }
             };
-            let tree = ChristmasTree::new(25);
+            let tree = ChristmasTree::new(show.width()?);
             printer.print(&format_grid(&tree.render(),
                                        formatter));
         }

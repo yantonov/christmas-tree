@@ -16,8 +16,11 @@ pub enum Command {
 
 #[derive(Clap)]
 pub struct Show {
+    #[clap(about = "tree width", short, long, )]
+    width: Option<u16>,
+
     #[clap(about = "raw | term | html | default", short, long, )]
-    format: Option<String>
+    format: Option<String>,
 }
 
 pub enum Format {
@@ -48,6 +51,24 @@ impl Show {
                 Format::from_str(&s)
             }
         }
+    }
+
+    pub fn width(&self) -> Result<u16, String> {
+        let default_width: u16 = 25;
+        let width: u16 = self.width
+            .unwrap_or(default_width);
+        let min_width = 17;
+        if width < min_width {
+            return Err(format!("width is too small, minimal value is {}", min_width));
+        }
+        if width % 2 == 0 {
+            return Err("width should be odd".to_string());
+        }
+        let max_width = 59;
+        if width > max_width {
+            return Err(format!("width is too large, maximal value is {}", max_width));
+        }
+        Ok(width)
     }
 }
 
