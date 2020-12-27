@@ -1,6 +1,5 @@
 use crate::line::{Line, Style, StyledToken, Color};
 use rand::Rng;
-use crate::formatter::{StyledTokenFormatter, format_vec};
 
 pub struct ChristmasTree {
     width: u16,
@@ -14,7 +13,7 @@ impl ChristmasTree {
         ChristmasTree { width }
     }
 
-    pub fn render(&self, formatter: &dyn StyledTokenFormatter) -> Vec<String> {
+    pub fn render(&self) -> Vec<Vec<StyledToken>> {
         let mut grid: Vec<Vec<StyledToken>> = vec![];
         let line = Line::new(self.width);
         let mut rng = rand::thread_rng();
@@ -69,11 +68,7 @@ impl ChristmasTree {
         grid.push(line.fill(
             &StyledToken::styled("#", Style::color(Color::Red))));
 
-        let mut lines: Vec<String> = vec![];
-        for chars in grid.iter() {
-            lines.push(format_vec(formatter, chars))
-        }
-        lines
+        grid
     }
 }
 
@@ -85,7 +80,7 @@ mod tests {
     #[test]
     fn render() {
         let tree = ChristmasTree::new(25);
-        let rendered = tree.render(&DummyStyledTokenFormatter {});
+        let rendered = tree.render();
         assert_eq!(20, rendered.len())
     }
 }

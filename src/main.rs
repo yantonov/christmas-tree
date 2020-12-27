@@ -5,10 +5,12 @@ mod printer;
 
 use crate::tree::ChristmasTree;
 use crate::formatter::terminal::TerminalStyleTokenFormatter;
-use crate::printer::{TerminalPrinter, LinePrinter, DummyLinePrinter};
+use crate::printer::{TerminalPrinter, LinePrinter};
+use crate::formatter::format_grid;
 
 fn main() {
-    let printer = DummyLinePrinter {};
+    let printer = TerminalPrinter {};
     let tree = ChristmasTree::new(25);
-    printer.print(&tree.render(&TerminalStyleTokenFormatter {}));
+    printer.print(&format_grid(&tree.render(),
+                               &TerminalStyleTokenFormatter {}));
 }
