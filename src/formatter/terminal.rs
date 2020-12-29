@@ -9,7 +9,7 @@ fn get_color_string(color: &Color) -> String {
         Color::Green => format!("{}", termion::color::Green.fg_str()),
         Color::Blue => format!("{}", termion::color::Blue.fg_str()),
         Color::Yellow => format!("{}", termion::color::Yellow.fg_str()),
-        Color::Cyan => format!("{}", termion::color::Blue.fg_str()),
+        Color::Cyan => format!("{}", termion::color::Cyan.fg_str()),
         Color::Magenta => format!("{}", termion::color::Magenta.fg_str()),
     }
 }
