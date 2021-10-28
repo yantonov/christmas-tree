@@ -9,7 +9,7 @@ pub trait StyledTokenFormatter {
 }
 
 fn format_vec(formatter: &dyn StyledTokenFormatter,
-              v: &Vec<StyledToken>) -> String {
+              v: &[StyledToken]) -> String {
     let mut result: Vec<String> = vec![];
     for item in v {
         result.push(formatter.format(item))
@@ -17,7 +17,7 @@ fn format_vec(formatter: &dyn StyledTokenFormatter,
     result.join("")
 }
 
-pub fn format_grid(grid: &Vec<Vec<StyledToken>>,
+pub fn format_grid(grid: &[Vec<StyledToken>],
                    formatter: &dyn StyledTokenFormatter) -> Vec<String> {
     let mut lines: Vec<String> = vec![];
     for chars in grid.iter() {

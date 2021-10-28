@@ -74,12 +74,12 @@ pub struct Line {
 
 impl Line {
     pub fn pad(&self,
-               s: &Vec<StyledToken>) -> Vec<StyledToken> {
+               s: &[StyledToken]) -> Vec<StyledToken> {
         self.pad_with(s, " ")
     }
 
     pub fn pad_with(&self,
-                    s: &Vec<StyledToken>,
+                    s: &[StyledToken],
                     pad_with: &str) -> Vec<StyledToken> {
         let w = self.width as usize;
         let s_len: usize = s.iter().map(|x| x.len()).sum();

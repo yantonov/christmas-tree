@@ -18,7 +18,7 @@ impl ChristmasTree {
         let line = Line::new(self.width);
         let mut rng = rand::thread_rng();
 
-        grid.push(line.pad(&vec![
+        grid.push(line.pad(&[
             StyledToken::styled("*", Style::color(Color::Red))]));
         for size in (3..self.width).step_by(2) {
             let mut chars: Vec<StyledToken> = vec![];
@@ -31,22 +31,18 @@ impl ChristmasTree {
                         StyledToken::styled(
                             "o",
                             Style::color(Color::Yellow))
+                    } else if index == email_index {
+                        StyledToken::styled(
+                            "@",
+                            Style::color(Color::Cyan))
+                    } else if index == plus_index {
+                        StyledToken::styled(
+                            "+",
+                            Style::color(Color::Red))
                     } else {
-                        if index == email_index {
-                            StyledToken::styled(
-                                "@",
-                                Style::color(Color::Cyan))
-                        } else {
-                            if index == plus_index {
-                                StyledToken::styled(
-                                    "+",
-                                    Style::color(Color::Red))
-                            } else {
-                                StyledToken::styled(
-                                    "^",
-                                    Style::color(Color::Green))
-                            }
-                        }
+                        StyledToken::styled(
+                            "^",
+                            Style::color(Color::Green))
                     });
             }
             grid.push(line.pad(&chars));
@@ -54,17 +50,17 @@ impl ChristmasTree {
         grid.push(line.fill(
             &StyledToken::styled("#", Style::color(Color::Blue))));
         grid.push(line.pad(
-            &vec![StyledToken::styled("III", Style::color(Color::Magenta))]));
+            &[StyledToken::styled("III", Style::color(Color::Magenta))]));
         grid.push(line.pad(
-            &vec![StyledToken::styled("III", Style::color(Color::Magenta))]));
+            &[StyledToken::styled("III", Style::color(Color::Magenta))]));
         grid.push(line.fill(
             &StyledToken::styled("#", Style::color(Color::Magenta))));
         grid.push(line.pad(
-            &vec![StyledToken::styled(" MERRY CHRISTMAS", Style::color(Color::Red))]));
+            &[StyledToken::styled(" MERRY CHRISTMAS", Style::color(Color::Red))]));
         grid.push(line.pad(
-            &vec![StyledToken::styled("AND", Style::color(Color::Red))]));
+            &[StyledToken::styled("AND", Style::color(Color::Red))]));
         grid.push(line.pad(
-            &vec![StyledToken::styled(" HAPPY HOLIDAYS!", Style::color(Color::Red))]));
+            &[StyledToken::styled(" HAPPY HOLIDAYS!", Style::color(Color::Red))]));
         grid.push(line.fill(
             &StyledToken::styled("#", Style::color(Color::Red))));
 
@@ -75,7 +71,6 @@ impl ChristmasTree {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::formatter::dummy::DummyStyledTokenFormatter;
 
     #[test]
     fn render() {

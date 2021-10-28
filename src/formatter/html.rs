@@ -5,12 +5,12 @@ pub struct HtmlStyledTokenFormatter {}
 
 fn get_color_string(color: &Color) -> String {
     match color {
-        Color::Red => format!("{}", "red"),
-        Color::Green => format!("{}", "green"),
-        Color::Blue => format!("{}", "blue"),
-        Color::Yellow => format!("{}", "yellow"),
-        Color::Cyan => format!("{}", "cyan"),
-        Color::Magenta => format!("{}", "magenta"),
+        Color::Red => "red".to_string(),
+        Color::Green => "green".to_string(),
+        Color::Blue => "blue".to_string(),
+        Color::Yellow => "yellow".to_string(),
+        Color::Cyan => "cyan".to_string(),
+        Color::Magenta => "magenta".to_string(),
     }
 }
 
@@ -20,7 +20,7 @@ impl StyledTokenFormatter for HtmlStyledTokenFormatter {
         let color = style.get_color();
         match color {
             None => {
-                format!("{}", instance.to_string())
+                instance.to_string()
             }
             Some(c) => {
                 format!("<span style='color: {};'>{}</span>",

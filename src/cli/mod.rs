@@ -48,7 +48,7 @@ impl Show {
         match &self.format {
             None => Ok(Format::Term),
             Some(s) => {
-                Format::from_str(&s)
+                Format::from_str(s)
             }
         }
     }
@@ -83,5 +83,5 @@ impl Arguments {
 }
 
 pub fn arguments() -> Arguments {
-    return Arguments { args: Opts::parse() };
+    Arguments { args: Opts::parse() }
 }

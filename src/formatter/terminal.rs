@@ -5,12 +5,12 @@ pub struct TerminalStyleTokenFormatter {}
 
 fn get_color_string(color: &Color) -> String {
     match color {
-        Color::Red => format!("{}", termion::color::Red.fg_str()),
-        Color::Green => format!("{}", termion::color::Green.fg_str()),
-        Color::Blue => format!("{}", termion::color::Blue.fg_str()),
-        Color::Yellow => format!("{}", termion::color::Yellow.fg_str()),
-        Color::Cyan => format!("{}", termion::color::Cyan.fg_str()),
-        Color::Magenta => format!("{}", termion::color::Magenta.fg_str()),
+        Color::Red => termion::color::Red.fg_str().to_string(),
+        Color::Green => termion::color::Green.fg_str().to_string(),
+        Color::Blue => termion::color::Blue.fg_str().to_string(),
+        Color::Yellow => termion::color::Yellow.fg_str().to_string(),
+        Color::Cyan => termion::color::Cyan.fg_str().to_string(),
+        Color::Magenta => termion::color::Magenta.fg_str().to_string(),
     }
 }
 
@@ -20,7 +20,7 @@ impl StyledTokenFormatter for TerminalStyleTokenFormatter {
         let color = style.get_color();
         match color {
             None => {
-                format!("{}", instance.to_string())
+                instance.to_string()
             }
             Some(c) => {
                 format!("{}{}{}{}",
