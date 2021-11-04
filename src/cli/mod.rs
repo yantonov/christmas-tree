@@ -10,7 +10,7 @@ struct Opts {
 
 #[derive(Clap)]
 pub enum Command {
-    #[clap(about = "calculate elapsed time since given date", display_order = 0)]
+    #[clap(about = "output the tree", display_order = 0)]
     Show(Show)
 }
 
