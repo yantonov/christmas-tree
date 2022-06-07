@@ -1,25 +1,25 @@
-use clap::{Clap, crate_version};
+use clap::Parser;
 use std::str::FromStr;
 
-#[derive(Clap)]
-#[clap(version = crate_version ! ())]
+#[derive(Parser)]
+#[clap(version)]
 struct Opts {
     #[clap(subcommand)]
     command: Command,
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 pub enum Command {
     #[clap(about = "output the tree", display_order = 0)]
     Show(Show)
 }
 
-#[derive(Clap)]
+#[derive(Parser)]
 pub struct Show {
-    #[clap(about = "tree width", short, long, )]
+    #[clap(help = "tree width", short, long, )]
     width: Option<u16>,
 
-    #[clap(about = "raw | term | html | default", short, long, )]
+    #[clap(help = "raw | term | html | default", short, long, )]
     format: Option<String>,
 }
 
