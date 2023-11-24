@@ -1,5 +1,6 @@
 use clap::Parser;
 use std::str::FromStr;
+use termion::terminal_size;
 
 #[derive(Parser)]
 #[clap(version)]
@@ -64,7 +65,12 @@ impl Show {
         if width % 2 == 0 {
             return Err("width should be odd".to_string());
         }
-        let max_width = 59;
+        let term_size = terminal_size().unwrap();
+        let max_width = if term_size.0 % 2 == 0 {
+            term_size.0 - 1
+        } else {
+            term_size.0
+        };
         if width > max_width {
             return Err(format!("width is too large, maximal value is {}", max_width));
         }
@@ -73,7 +79,7 @@ impl Show {
 }
 
 pub struct Arguments {
-    args: Opts
+    args: Opts,
 }
 
 impl Arguments {

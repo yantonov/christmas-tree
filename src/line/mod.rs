@@ -10,7 +10,7 @@ pub enum Color {
 
 #[derive(Clone)]
 pub struct Style {
-    color: Option<Color>
+    color: Option<Color>,
 }
 
 impl Style {
@@ -69,7 +69,7 @@ impl ToString for StyledToken {
 }
 
 pub struct Line {
-    width: u16
+    width: u16,
 }
 
 impl Line {

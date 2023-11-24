@@ -7,7 +7,7 @@ mod printer;
 use crate::tree::ChristmasTree;
 use crate::formatter::terminal::TerminalStyleTokenFormatter;
 use crate::printer::{TerminalPrinter, LinePrinter, DummyLinePrinter, HtmlPrinter};
-use crate::formatter::{format_grid, StyledTokenFormatter};
+use crate::formatter::StyledTokenFormatter;
 use crate::cli::{Format, Command};
 use crate::formatter::dummy::DummyStyledTokenFormatter;
 use crate::formatter::html::HtmlStyledTokenFormatter;
@@ -28,8 +28,7 @@ fn entry_point() -> Result<(), String> {
                 }
             };
             let tree = ChristmasTree::new(show.width()?);
-            printer.print(&format_grid(&tree.render(),
-                                       formatter));
+            printer.print(formatter, &tree.render());
         }
     }
     Ok(())
