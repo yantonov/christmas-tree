@@ -5,4 +5,4 @@ cd "$(dirname "$0")"
 
 cd ..
 
-cargo run show
+cargo run show $@
