@@ -22,9 +22,9 @@ impl ChristmasTree {
             StyledToken::styled("*", Style::color(Color::Red))]));
         for size in (3..self.width).step_by(2) {
             let mut chars: Vec<StyledToken> = vec![];
-            let ball_index = rng.gen::<u16>() % size;
-            let email_index = rng.gen::<u16>() % size;
-            let plus_index = rng.gen::<u16>() % size;
+            let ball_index = rng.r#gen::<u16>() % size;
+            let email_index = rng.r#gen::<u16>() % size;
+            let plus_index = rng.r#gen::<u16>() % size;
             for index in 0..size {
                 chars.push(
                     if index == ball_index {
