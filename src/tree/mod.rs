@@ -16,15 +16,15 @@ impl ChristmasTree {
     pub fn render(&self) -> Vec<Vec<StyledToken>> {
         let mut grid: Vec<Vec<StyledToken>> = vec![];
         let line = Line::new(self.width);
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
 
         grid.push(line.pad(&[
             StyledToken::styled("*", Style::color(Color::Red))]));
         for size in (3..self.width).step_by(2) {
             let mut chars: Vec<StyledToken> = vec![];
-            let ball_index = rng.r#gen::<u16>() % size;
-            let email_index = rng.r#gen::<u16>() % size;
-            let plus_index = rng.r#gen::<u16>() % size;
+            let ball_index = rng.random::<u16>() % size;
+            let email_index = rng.random::<u16>() % size;
+            let plus_index = rng.random::<u16>() % size;
             for index in 0..size {
                 chars.push(
                     if index == ball_index {
