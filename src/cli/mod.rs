@@ -1,6 +1,6 @@
 use clap::Parser;
+use crossterm::terminal::size;
 use std::str::FromStr;
-use termion::terminal_size;
 
 #[derive(Parser)]
 #[clap(version)]
@@ -65,7 +65,7 @@ impl Show {
         if width.is_multiple_of(2) {
             return Err("width should be odd".to_string());
         }
-        let term_size = terminal_size().unwrap();
+        let term_size = size().unwrap();
         let max_width = if term_size.0.is_multiple_of(2) {
             term_size.0 - 1
         } else {

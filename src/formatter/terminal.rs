@@ -1,17 +1,19 @@
 use crate::formatter::StyledTokenFormatter;
 use crate::line::{Color, StyledToken};
+use crossterm::style::{Color as TerminalColor, ResetColor, SetForegroundColor};
 
 pub struct TerminalStyleTokenFormatter {}
 
 fn get_color_string(color: &Color) -> String {
-    match color {
-        Color::Red => termion::color::Red.fg_str().to_string(),
-        Color::Green => termion::color::Green.fg_str().to_string(),
-        Color::Blue => termion::color::Blue.fg_str().to_string(),
-        Color::Yellow => termion::color::Yellow.fg_str().to_string(),
-        Color::Cyan => termion::color::Cyan.fg_str().to_string(),
-        Color::Magenta => termion::color::Magenta.fg_str().to_string(),
-    }
+    let terminal_color = match color {
+        Color::Red => TerminalColor::Red,
+        Color::Green => TerminalColor::Green,
+        Color::Blue => TerminalColor::Blue,
+        Color::Yellow => TerminalColor::Yellow,
+        Color::Cyan => TerminalColor::Cyan,
+        Color::Magenta => TerminalColor::Magenta,
+    };
+    SetForegroundColor(terminal_color).to_string()
 }
 
 impl StyledTokenFormatter for TerminalStyleTokenFormatter {
@@ -21,13 +23,7 @@ impl StyledTokenFormatter for TerminalStyleTokenFormatter {
         match color {
             None => instance.to_string(),
             Some(c) => {
-                format!(
-                    "{}{}{}{}",
-                    get_color_string(c),
-                    instance,
-                    termion::color::Reset.bg_str(),
-                    termion::color::Reset.fg_str()
-                )
+                format!("{}{}{}", get_color_string(c), instance, ResetColor)
             }
         }
     }

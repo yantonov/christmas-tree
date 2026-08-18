@@ -1,6 +1,7 @@
 use crate::formatter::StyledTokenFormatter;
 use crate::line::StyledToken;
-use termion::terminal_size;
+use crossterm::cursor::MoveTo;
+use crossterm::terminal::{Clear, ClearType, size};
 
 pub trait LinePrinter {
     fn print(&self, formatter: &dyn StyledTokenFormatter, lines: &[Vec<StyledToken>]);
@@ -29,12 +30,12 @@ pub struct TerminalPrinter {}
 
 impl LinePrinter for TerminalPrinter {
     fn print(&self, formatter: &dyn StyledTokenFormatter, lines: &[Vec<StyledToken>]) {
-        print!("{}{}", termion::clear::All, termion::cursor::Goto(1, 1));
-        let term_size = terminal_size().unwrap();
+        print!("{}{}", Clear(ClearType::All), MoveTo(0, 0));
+        let term_size = size().unwrap();
         let center = (term_size.0 - lines.first().unwrap().len() as u16) / 2;
         for (pos, line) in lines.iter().enumerate() {
             let formatted = format_line(formatter, line);
-            print!("{}", termion::cursor::Goto(center, 1 + pos as u16));
+            print!("{}", MoveTo(center, pos as u16));
             println!("{}", formatted)
         }
     }
