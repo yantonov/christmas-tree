@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 
 cd ..
 
-cargo fmt --all -- --check
+cargo fmt --all
 
 cargo clippy --all-targets -- -D warnings
 
