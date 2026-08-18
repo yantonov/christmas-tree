@@ -7,7 +7,7 @@ pub struct ChristmasTree {
 
 impl ChristmasTree {
     pub fn new(width: u16) -> ChristmasTree {
-        if width % 2 == 0 {
+        if width.is_multiple_of(2) {
             panic!("width should be odd")
         }
 
@@ -19,9 +19,7 @@ impl ChristmasTree {
         let line = Line::new(self.width);
         let mut rng = rand::rng();
 
-        grid.push(line.pad(&[
-            StyledToken::styled("*", Style::color(Color::Red))
-        ]));
+        grid.push(line.pad(&[StyledToken::styled("*", Style::color(Color::Red))]));
 
         for size in (3..self.width).step_by(2) {
             let mut chars: Vec<StyledToken> = vec![];
@@ -45,43 +43,27 @@ impl ChristmasTree {
             grid.push(line.pad(&chars));
         }
 
-        grid.push(line.fill(
-            &StyledToken::styled("#", Style::color(Color::Blue))
-        ));
+        grid.push(line.fill(&StyledToken::styled("#", Style::color(Color::Blue))));
 
-        grid.push(line.pad(
-            &[StyledToken::styled("III", Style::color(Color::Magenta))]
-        ));
+        grid.push(line.pad(&[StyledToken::styled("III", Style::color(Color::Magenta))]));
 
-        grid.push(line.pad(
-            &[StyledToken::styled("III", Style::color(Color::Magenta))]
-        ));
+        grid.push(line.pad(&[StyledToken::styled("III", Style::color(Color::Magenta))]));
 
-        grid.push(line.fill(
-            &StyledToken::styled("#", Style::color(Color::Magenta))
-        ));
+        grid.push(line.fill(&StyledToken::styled("#", Style::color(Color::Magenta))));
 
-        grid.push(line.pad(
-            &[StyledToken::styled(
-                " MERRY CHRISTMAS",
-                Style::color(Color::Red)
-            )]
-        ));
+        grid.push(line.pad(&[StyledToken::styled(
+            " MERRY CHRISTMAS",
+            Style::color(Color::Red),
+        )]));
 
-        grid.push(line.pad(
-            &[StyledToken::styled("AND", Style::color(Color::Red))]
-        ));
+        grid.push(line.pad(&[StyledToken::styled("AND", Style::color(Color::Red))]));
 
-        grid.push(line.pad(
-            &[StyledToken::styled(
-                " HAPPY HOLIDAYS!",
-                Style::color(Color::Red)
-            )]
-        ));
+        grid.push(line.pad(&[StyledToken::styled(
+            " HAPPY HOLIDAYS!",
+            Style::color(Color::Red),
+        )]));
 
-        grid.push(line.fill(
-            &StyledToken::styled("#", Style::color(Color::Red))
-        ));
+        grid.push(line.fill(&StyledToken::styled("#", Style::color(Color::Red))));
 
         grid
     }

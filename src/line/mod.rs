@@ -1,3 +1,5 @@
+use std::fmt;
+
 #[derive(Clone)]
 pub enum Color {
     Red,
@@ -15,15 +17,11 @@ pub struct Style {
 
 impl Style {
     pub fn default() -> Style {
-        Style {
-            color: None
-        }
+        Style { color: None }
     }
 
     pub fn color(color: Color) -> Style {
-        Style {
-            color: Some(color)
-        }
+        Style { color: Some(color) }
     }
 
     pub fn get_color(&self) -> &Option<Color> {
@@ -62,9 +60,9 @@ impl StyledToken {
     }
 }
 
-impl ToString for StyledToken {
-    fn to_string(&self) -> String {
-        self.s.clone()
+impl fmt::Display for StyledToken {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.s)
     }
 }
 
@@ -73,14 +71,11 @@ pub struct Line {
 }
 
 impl Line {
-    pub fn pad(&self,
-               s: &[StyledToken]) -> Vec<StyledToken> {
+    pub fn pad(&self, s: &[StyledToken]) -> Vec<StyledToken> {
         self.pad_with(s, " ")
     }
 
-    pub fn pad_with(&self,
-                    s: &[StyledToken],
-                    pad_with: &str) -> Vec<StyledToken> {
+    pub fn pad_with(&self, s: &[StyledToken], pad_with: &str) -> Vec<StyledToken> {
         let w = self.width as usize;
         let s_len: usize = s.iter().map(|x| x.len()).sum();
 
@@ -123,7 +118,7 @@ mod tests {
     fn pad() {
         let width: usize = 9;
         let line = Line::new(width as u16);
-        let chars: Vec<StyledToken> = line.pad(&vec![StyledToken::from_str("*")]);
+        let chars: Vec<StyledToken> = line.pad(&[StyledToken::from_str("*")]);
         assert_eq!(width, chars.len());
         let center = width / 2;
         assert_eq!("*", chars.get(center).unwrap().s);
@@ -138,7 +133,7 @@ mod tests {
     fn pad_token() {
         let width: usize = 9;
         let line = Line::new(width as u16);
-        let chars = line.pad(&vec![StyledToken::from_str("III")]);
+        let chars = line.pad(&[StyledToken::from_str("III")]);
 
         let actual_width: usize = 7;
         assert_eq!(7, chars.len());

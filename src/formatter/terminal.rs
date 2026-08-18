@@ -1,5 +1,5 @@
-use crate::line::{StyledToken, Color};
 use crate::formatter::StyledTokenFormatter;
+use crate::line::{Color, StyledToken};
 
 pub struct TerminalStyleTokenFormatter {}
 
@@ -19,15 +19,15 @@ impl StyledTokenFormatter for TerminalStyleTokenFormatter {
         let style = instance.style();
         let color = style.get_color();
         match color {
-            None => {
-                instance.to_string()
-            }
+            None => instance.to_string(),
             Some(c) => {
-                format!("{}{}{}{}",
-                        get_color_string(c),
-                        instance.to_string(),
-                        termion::color::Reset.bg_str(),
-                        termion::color::Reset.fg_str())
+                format!(
+                    "{}{}{}{}",
+                    get_color_string(c),
+                    instance,
+                    termion::color::Reset.bg_str(),
+                    termion::color::Reset.fg_str()
+                )
             }
         }
     }

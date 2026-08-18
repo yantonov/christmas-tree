@@ -1,32 +1,27 @@
 mod cli;
-mod line;
 mod formatter;
-mod tree;
+mod line;
 mod printer;
+mod tree;
 
-use crate::tree::ChristmasTree;
-use crate::formatter::terminal::TerminalStyleTokenFormatter;
-use crate::printer::{TerminalPrinter, LinePrinter, DummyLinePrinter, HtmlPrinter};
+use crate::cli::{Command, Format};
 use crate::formatter::StyledTokenFormatter;
-use crate::cli::{Format, Command};
 use crate::formatter::dummy::DummyStyledTokenFormatter;
 use crate::formatter::html::HtmlStyledTokenFormatter;
+use crate::formatter::terminal::TerminalStyleTokenFormatter;
+use crate::printer::{DummyLinePrinter, HtmlPrinter, LinePrinter, TerminalPrinter};
+use crate::tree::ChristmasTree;
 
 fn entry_point() -> Result<(), String> {
     let args = cli::arguments();
     match args.command() {
         Command::Show(show) => {
-            let (printer, formatter): (&dyn LinePrinter, &dyn StyledTokenFormatter) = match show.format()? {
-                Format::Raw => {
-                    (&DummyLinePrinter {}, &DummyStyledTokenFormatter {})
-                }
-                Format::Term => {
-                    (&TerminalPrinter {}, &TerminalStyleTokenFormatter {})
-                }
-                Format::Html => {
-                    (&HtmlPrinter {}, &HtmlStyledTokenFormatter {})
-                }
-            };
+            let (printer, formatter): (&dyn LinePrinter, &dyn StyledTokenFormatter) =
+                match show.format()? {
+                    Format::Raw => (&DummyLinePrinter {}, &DummyStyledTokenFormatter {}),
+                    Format::Term => (&TerminalPrinter {}, &TerminalStyleTokenFormatter {}),
+                    Format::Html => (&HtmlPrinter {}, &HtmlStyledTokenFormatter {}),
+                };
             let tree = ChristmasTree::new(show.width()?);
             printer.print(formatter, &tree.render());
         }

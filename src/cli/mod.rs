@@ -12,15 +12,15 @@ struct Opts {
 #[derive(Parser)]
 pub enum Command {
     #[clap(about = "output the tree", display_order = 0)]
-    Show(Show)
+    Show(Show),
 }
 
 #[derive(Parser)]
 pub struct Show {
-    #[clap(help = "tree width", short, long, )]
+    #[clap(help = "tree width", short, long)]
     width: Option<u16>,
 
-    #[clap(help = "raw | term | html | default", short, long, )]
+    #[clap(help = "raw | term | html | default", short, long)]
     format: Option<String>,
 }
 
@@ -39,7 +39,7 @@ impl FromStr for Format {
             "term" => Ok(Format::Term),
             "html" => Ok(Format::Html),
             "default" => Ok(Format::Term),
-            _ => Err(format!("invalid format: {}", value))
+            _ => Err(format!("invalid format: {}", value)),
         }
     }
 }
@@ -48,31 +48,34 @@ impl Show {
     pub fn format(&self) -> Result<Format, String> {
         match &self.format {
             None => Ok(Format::Term),
-            Some(s) => {
-                Format::from_str(s)
-            }
+            Some(s) => Format::from_str(s),
         }
     }
 
     pub fn width(&self) -> Result<u16, String> {
         let default_width: u16 = 25;
-        let width: u16 = self.width
-            .unwrap_or(default_width);
+        let width: u16 = self.width.unwrap_or(default_width);
         let min_width = 17;
         if width < min_width {
-            return Err(format!("width is too small, minimal value is {}", min_width));
+            return Err(format!(
+                "width is too small, minimal value is {}",
+                min_width
+            ));
         }
-        if width % 2 == 0 {
+        if width.is_multiple_of(2) {
             return Err("width should be odd".to_string());
         }
         let term_size = terminal_size().unwrap();
-        let max_width = if term_size.0 % 2 == 0 {
+        let max_width = if term_size.0.is_multiple_of(2) {
             term_size.0 - 1
         } else {
             term_size.0
         };
         if width > max_width {
-            return Err(format!("width is too large, maximal value is {}", max_width));
+            return Err(format!(
+                "width is too large, maximal value is {}",
+                max_width
+            ));
         }
         Ok(width)
     }
@@ -89,5 +92,7 @@ impl Arguments {
 }
 
 pub fn arguments() -> Arguments {
-    Arguments { args: Opts::parse() }
+    Arguments {
+        args: Opts::parse(),
+    }
 }

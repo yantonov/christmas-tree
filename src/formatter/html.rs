@@ -1,5 +1,5 @@
 use crate::formatter::StyledTokenFormatter;
-use crate::line::{StyledToken, Color};
+use crate::line::{Color, StyledToken};
 
 pub struct HtmlStyledTokenFormatter {}
 
@@ -19,13 +19,13 @@ impl StyledTokenFormatter for HtmlStyledTokenFormatter {
         let style = instance.style();
         let color = style.get_color();
         match color {
-            None => {
-                instance.to_string()
-            }
+            None => instance.to_string(),
             Some(c) => {
-                format!("<span style='color: {};'>{}</span>",
-                        get_color_string(c),
-                        instance.to_string())
+                format!(
+                    "<span style='color: {};'>{}</span>",
+                    get_color_string(c),
+                    instance
+                )
             }
         }
     }
